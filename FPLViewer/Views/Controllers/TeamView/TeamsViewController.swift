@@ -17,7 +17,6 @@ class TeamsViewController: UIViewController {
     var teamsViewModel = TeamsViewModel()
 
     // MARK: - Combine
-    // Stores all active Combine subscriptions
     // When this Set is deallocated, all subscriptions cancel automatically
     private var cancellables = Set<AnyCancellable>()
 
