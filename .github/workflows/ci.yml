@@ -17,16 +17,11 @@ jobs:
 
       - name: 🔨 Build and run tests
         run: |
-          SIMULATOR=$(xcrun simctl list devices available -j | python3 -c "
-          import json,sys
-          data=json.load(sys.stdin)
-          iphones=[d for devs in data['devices'].values() for d in devs if d['isAvailable'] and 'iPhone' in d['name']]
-          print(iphones[-1]['udid'])
-          ")
-          echo "Using simulator: $SIMULATOR"
+          DEVICE=$(xcrun simctl list devices available | grep -E "^\s*iPhone" | tail -1 | sed 's/^\s*//' | sed 's/ (.*//')
+          echo "Using simulator: $DEVICE"
           xcodebuild test \
             -project FPLViewer.xcodeproj \
             -scheme FPLViewer \
-            -destination "platform=iOS Simulator,id=$SIMULATOR" \
+            -destination "platform=iOS Simulator,name=$DEVICE" \
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO
