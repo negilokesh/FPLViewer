@@ -17,7 +17,7 @@ jobs:
 
       - name: 🔨 Build and run tests
         run: |
-          DEVICE=$(xcrun simctl list devices available | grep -E "^\s*iPhone" | tail -1 | sed 's/^\s*//' | sed 's/ (.*//')
+          DEVICE=$(xcrun simctl list devices available | grep -E "^[[:space:]]*iPhone" | tail -1 | sed 's/ (.*//' | xargs)
           echo "Using simulator: $DEVICE"
           xcodebuild test \
             -project FPLViewer.xcodeproj \
